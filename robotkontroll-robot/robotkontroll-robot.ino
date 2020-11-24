@@ -21,16 +21,10 @@
 // Search and install them through the arduino ide, 
 // using the Library Manager (cmd/ctrl + Shift +  i).
 
-#include <Servo.h> // Library for controlling servo motors,
-                   // servo motors must use PWM capable pins.
+// Library for controlling servo motors
+#include <Servo.h> // servo motors must use PWM capable pins.
 
 #include <NewPing.h> // Library for controlling distance sensors.
-
-#define TRIGGER_PIN  2  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN     4  // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE 400 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
-
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
 
 //-- Constants --//
 
@@ -87,13 +81,23 @@ int  ySpeedNeg = 0;
 int analogMin = 485;
 int analogMax = 515;
 
-// radio vars
+//--Radio vars
 int leftSpeed = 0;
 int rightSpeed = 0;
 int roboDirection = 0; //0 stopped, 1 Forward, 2 Left, 3 Right, 4 Reverse
 int robotStateLocal = 0; //robotState, 0 for auto, 1 for taurus, 2 for manual override
-uint32_t xVal = 0; // Analog-stick values
+  // Analog-stick values
+uint32_t xVal = 0;
 uint32_t yVal = 0;
+
+// Setup for Ultra sonic sensor
+#define TRIGGER_PIN  2  // Arduino pin tied to trigger pin on the ultrasonic sensor.
+#define ECHO_PIN     4  // Arduino pin tied to echo pin on the ultrasonic sensor.
+#define MAX_DISTANCE 400 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+
+//--Local includes
 
 #include "radio.h" //Include rf-recieve and answer script.
 
