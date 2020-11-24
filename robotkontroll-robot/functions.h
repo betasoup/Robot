@@ -88,19 +88,19 @@ void detection() { //test the distance of different direction
     delay(delay_time);
     if(leftDist > rightDist) {//if left distance more than right distance
       isTurning=true;
-      turnStart=now;
+      turnStart=millis();
       turnL();
     }
     if(leftDist <= rightDist) { //if left distance not more than right distance
       isTurning=true;
-      turnStart=now;
+      turnStart=millis();
       turnR();
     }
      if (leftDist < 10 && rightDist < 10) //if left distance and right
     //distance both less than 10 cm
     {
       isBacking=true;
-      backStart=now;
+      backStart=millis();
       back();
     }
     }

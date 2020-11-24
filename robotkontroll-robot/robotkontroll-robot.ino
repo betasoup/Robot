@@ -1,20 +1,4 @@
-
 // SvenstueBot 1.0
-// Original code downloaded from kjell.com
-// Edited oktober 2020 - by Mathis Aaserud
-
-// This program used delays extensively.
-// There was no explanation for how the servo or ultra sonic device works.
-// The robot, barely, functioned as advertised, but was far from fun to use.
-// Load original code first and compare yourself.
-
-// Changes made:
-// -Most delays deleted and replaced with timers.
-// -Motors now use PWM to controll speed, instead of going max speed at all times.
-// -Added NewPing library to simplify and improve(!) sensor functionality.
-// -Added a music-player, its from the example sketch: 02 Digital -> toneMelody.
-// -Added a bunch of comments, this is an educational document.
-
 
 // The following #includes (Servo and NewPing)
 // have to be downloaded and installed.
@@ -52,9 +36,18 @@ const int stopSpeed=0;
 // Delay time?
 const int delay_time = 250; // wait for servo to turn!!!!!
 
-//-- Objects --//
-Servo senseServo;  // Servo motor that turns the ultra sonic sensor
+// Ultra sonic sensor constants
+#define TRIGGER_PIN  2  // Arduino pin tied to trigger pin on the ultrasonic sensor.
+#define ECHO_PIN     4  // Arduino pin tied to echo pin on the ultrasonic sensor.
+#define MAX_DISTANCE 400 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
 
+//-- Objects --//
+
+// Servo motor that turns the ultra sonic sensor
+Servo senseServo;
+
+// Ultra sonic sensor setup of pins and maximum distance.
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); 
 
 //-- Variables --//
 
@@ -64,7 +57,6 @@ int rightDist = 0; // right distance
 int leftDist = 0; // left distance
 
 // Time variabels
-unsigned long now=0;
 unsigned long previousDetect = 0; 
 unsigned long backStart = 0; 
 unsigned long turnStart = 0; 
@@ -90,13 +82,6 @@ int robotStateLocal = 0; //robotState, 0 for auto, 1 for taurus, 2 for manual ov
 uint32_t xVal = 0;
 uint32_t yVal = 0;
 
-// Setup for Ultra sonic sensor
-#define TRIGGER_PIN  2  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN     4  // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE 400 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
-
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
-
 //--Local includes
 
 #include "radio.h" //Include rf-recieve and answer script.
@@ -108,14 +93,13 @@ void setup() {
   //playMelody(melody);  
   Serial.begin(115200);
   
-    // if()statement below halts program if radio is disconnected
-    // or broken.
-    // Comment out if rf unit is not in use.
-    if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN))
-    {
-        //Serial.println("Cannot communicate with radio");
-        while (1); // Wait here forever.
-    }
+  // if()statement below halts program if radio is disconnected
+  // or broken.
+  // Comment out if rf unit is not in use.
+  if (!_radio.init(RADIO_ID, PIN_RADIO_CE, PIN_RADIO_CSN)){
+    //Serial.println("Cannot communicate with radio");
+    while (1); // Wait here forever.
+  }
   // Set up motor pins
   pinMode(pinLB,OUTPUT);
   pinMode(pinLF,OUTPUT);  
@@ -126,22 +110,19 @@ void setup() {
   senseServo.attach(5);
 }
 
-
 //-- The main loop. --//
 void loop() {
-  now = millis(); // set counter to now
-
   //autonomusMode
   if(robotStateLocal == 0){
     if(isBacking){
-      if (now - backStart >= backTime){ isBacking=false; }
+      if (millis() - backStart >= backTime){ isBacking=false; }
     }
     else if(isTurning){
-      if (now - turnStart >= turnTime){ isTurning=false; }
+      if (millis() - turnStart >= turnTime){ isTurning=false; }
     }
     else {
-      if (now - previousDetect >= detectionFreq) {
-        previousDetect = now;
+      if (millis() - previousDetect >= detectionFreq) {
+        previousDetect = millis();
         detection(); // check if about to hit into something, and set the direction accordingly.
       }
     }
