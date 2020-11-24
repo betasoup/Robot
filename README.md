@@ -4,7 +4,9 @@ Here is the code for an autonomous and or rf-controlled robot.
 
 This project was built with minimal soldering.
 
-The robot is intended for educational use in a kindergarten and chassis with microcontrollers and parts like the ones described are commonly available as commercial products. This specific build is based on a robot from "Kjell og Company" in Norway.
+The robot is intended for educational use in a kindergarten.
+
+The chassis with microcontrollers and parts like the ones described are commonly available as commercial products.
 
 ### Parts required for the robot:
 1. Arduino (Uno was used)
@@ -16,7 +18,7 @@ The robot is intended for educational use in a kindergarten and chassis with mic
 7. A robot chassis
 8. 6 x 1.5 V(AA/LR6) batteries.(Dependeing on the size of the motor)
 9. Dupont cables, enough.
-  * SensorShield 5.0 was uses, it is not needed, but it makes connecting many power wires a breaze.
+  * SensorShield 5.0 is used, it is not needed, but it makes connecting many power wires a breaze.
 
 ### Parts required for the robot:
 1. Arduino (Nano was used)
