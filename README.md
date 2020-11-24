@@ -20,7 +20,7 @@ The chassis with microcontrollers and parts like the ones described are commonly
 9. Dupont cables, enough.
   * SensorShield 5.0 is used, it is not needed, but it makes connecting many power wires a breaze.
 
-### Parts required for the robot:
+### Parts required for the controller:
 1. Arduino (Nano was used)
 2. RF24L+(normal RF24 probably works to)
 3. Standard analog joystick.
