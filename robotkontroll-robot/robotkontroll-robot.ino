@@ -70,6 +70,7 @@ int  xSpeed = 0;
 int  ySpeed = 0;
 int  xSpeedNeg = 0;
 int  ySpeedNeg = 0;
+int  xSpeedInv = 0;
 int analogMin = 485;
 int analogMax = 515;
 
