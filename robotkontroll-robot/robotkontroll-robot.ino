@@ -1,62 +1,77 @@
 // SvenstueBot 1.0
 
-// The following #includes (Servo and NewPing)
-// have to be downloaded and installed.
-// Search and install them through the arduino ide, 
+// The following #includes: Servo, NewPing and NRFLite
+// might need to be downloaded and installed.
+// Download and install them through the Arduino ide, 
 // using the Library Manager (cmd/ctrl + Shift +  i).
 
+//<<--File Structure:-->>
+/*
+
+-Library includes
+-Constants
+-Objects
+-Variables
+-Local includes (what to call these? the tabs in the arduino ide?)
+--Functions.h holds the robot main logic, motor controll, distance controll, joystick controll
+--radio.h holds the radio functions
+-setup()
+-loop()
+
+*/
 // Library for controlling servo motors
 #include <Servo.h> // servo motors must use PWM capable pins.
 
-#include <NewPing.h> // Library for controlling distance sensors.
+// Library for controlling distance sensors.
+#include <NewPing.h>
+
+// Radio includes
+#include <SPI.h> //Serial Periferal Interface library is pre-instaled
+#include <NRFLite.h> // Library for interfacing with radio over SPI
 
 //-- Constants --//
 
 // Motor Pins:
-const int pinLB=7; // define pin6 as left back connect with IN1
-const int pinLF=9; // define pin9 as left forward connect with IN2
-const int pinRB=10; // define pin10 as right back connect with IN3
-const int pinRF=11; // define pin11 as right back connect with IN4
+const int pinLB=A0; // define analog pin 0 as left back connect with IN1
+const int pinLF=A1; // define analog pin 1 as left forward connect with IN2
+const int pinRB=A2; // define analog pin 2 as right back connect with IN3
+const int pinRF=A3; // define analog pin 3 as right back connect with IN4
 const int motorAspeed=6; // pwm speed pin for the right motor
 const int motorBspeed=3; // pwm speed pin for the left motor
 
 // Time
 const int detectionFreq=50; // Detection Frequency in milliseconds
-const int backTime=500; // Time it takes to reverse x cm in milliseconds.
-const int turnTime=800; // Time it takes to turn x degrees in milliseconds
+const int backTime=200; // Time it takes to reverse x cm in milliseconds.
+const int turnTime=400; // Time it takes to turn x degrees in milliseconds
 
 
 // pwm speed numbers
-const int highSpeed=150;
-const int mediumSpeed=100;
-const int lowSpeed=80;
+const int highSpeed=255;
+const int mediumSpeed=200;
+const int lowSpeed=150;
 const int superSlow=100;
 const int stopSpeed=0;
 
 // Delay time?
 const int delay_time = 250; // wait for servo to turn!!!!!
 
-// Ultra sonic sensor constants
-#define TRIGGER_PIN  2  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN     4  // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE 400 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
-
 //-- Objects --//
 
 // Servo motor that turns the ultra sonic sensor
 Servo senseServo;
 
-// Ultra sonic sensor setup of pins and maximum distance.
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); 
+// Ultra sonic sensor setup
+NewPing sonar(2, 4, 400); // output pin, input pin, maximum distance in cm.
 
 //-- Variables --//
 
 // Ultra Sonic variables
 int frontDist = 0; // forward distance
+//Comparators
 int rightDist = 0; // right distance
 int leftDist = 0; // left distance
 
-// Time variabels
+// Time variables
 unsigned long previousDetect = 0; 
 unsigned long backStart = 0; 
 unsigned long turnStart = 0; 
@@ -65,7 +80,7 @@ unsigned long turnStart = 0;
 bool isBacking=false;
 bool isTurning=false;
 
-// Analog Stick ints
+// Analog Stick integers
 int  xSpeed = 0;
 int  ySpeed = 0;
 int  xSpeedNeg = 0;

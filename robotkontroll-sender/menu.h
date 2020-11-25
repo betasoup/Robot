@@ -196,13 +196,12 @@ void buttonPushed(int button){
 }
 
 void buttonChecker(){
-  Serial.println("Push button at channels: ");
+  Serial.println("Push button at channel: ");
     for (int i = 0; i < 16; i++) {
         muxToggler(i);
         byte data = digitalRead(muxPin);
         if(data == LOW){
           buttonPushed(i);
-          Serial.print(" - ");
           Serial.print(i);
         }
   }

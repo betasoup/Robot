@@ -7,13 +7,10 @@ MOSI  -> 11 (Hardware SPI MOSI)
 MISO  -> 12 (Hardware SPI MISO)
 SCK   -> 13 (Hardware SPI SCK)
 IRQ   -> No connection
-VCC   -> No more than 3.6 volts
+VCC   -> No more than 3.6 volts 
 GND   -> GND
 
 */
-
-#include <SPI.h>
-#include <NRFLite.h>
 
 const static uint8_t RADIO_ID = 0;
 const static uint8_t DESTINATION_RADIO_ID = 1;
