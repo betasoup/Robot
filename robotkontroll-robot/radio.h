@@ -67,7 +67,7 @@ void radioCheck()
             Serial.print('\n');
             xVal = radioData.analogStickX;
             yVal = radioData.analogStickY;
-            if(!robotStateLocal == radioData.robotState)
+            if(robotStateLocal != radioData.robotState)
             robotStateLocal = radioData.robotState;
             Serial.print(String(xVal));
             Serial.print('\n');
