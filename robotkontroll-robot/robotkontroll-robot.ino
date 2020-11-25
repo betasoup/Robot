@@ -25,17 +25,19 @@
 // Library for controlling distance sensors.
 #include <NewPing.h>
 
-// Radio includes
-#include <SPI.h> //Serial Periferal Interface library is pre-instaled
-#include <NRFLite.h> // Library for interfacing with radio over SPI
+//Serial Periferal Interface library is pre-instaled
+#include <SPI.h> 
+
+// Library for interfacing with radio over SPI
+#include <NRFLite.h>
 
 //-- Constants --//
 
 // Motor Pins:
-const int pinLB=A0; // define analog pin 0 as left back connect with IN1
-const int pinLF=A1; // define analog pin 1 as left forward connect with IN2
-const int pinRB=A2; // define analog pin 2 as right back connect with IN3
-const int pinRF=A3; // define analog pin 3 as right back connect with IN4
+const int pinLB=A0; // analog pin 0 as left back connect with IN1
+const int pinLF=A1; // analog pin 1 as left forward connect with IN2
+const int pinRB=A2; // analog pin 2 as right back connect with IN3
+const int pinRF=A3; // analog pin 3 as right back connect with IN4
 const int motorAspeed=6; // pwm speed pin for the right motor
 const int motorBspeed=3; // pwm speed pin for the left motor
 
@@ -53,7 +55,7 @@ const int superSlow=100;
 const int stopSpeed=0;
 
 // Delay time?
-const int delay_time = 250; // wait for servo to turn!!!!!
+const int delay_time = 250; // wait for servo to turn! // sorry, som many thngs to do first
 
 //-- Objects --//
 
