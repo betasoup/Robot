@@ -123,7 +123,7 @@ void analogAnalyzer(){
   xSpeedNeg = map(xVal,analogMin, 0, 70, 255);
   ySpeedNeg = map(yVal,analogMin, 0, 70, 255);
   xSpeedInv = ySpeed - xSpeed;
-  xSpeedInvNeg = ySpeed - xSpeedNeg;
+  xSpeedInvNeg = ySpeed - xSpeedNeg - 70;
   
   //stopp
   if(xVal < analogMax && xVal > analogMin && yVal < analogMax && yVal > analogMin){
