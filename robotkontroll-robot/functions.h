@@ -122,29 +122,39 @@ void analogAnalyzer(){
   ySpeed = map(yVal,analogMax, 1024, 70, 255);
   xSpeedNeg = map(xVal,analogMin, 0, 70, 255);
   ySpeedNeg = map(yVal,analogMin, 0, 70, 255);
-  xSpeedInv = ySpeed - xSpeed;
+  xSpeedInv = ySpeed - xSpeed - 70;
   xSpeedInvNeg = ySpeed - xSpeedNeg - 70;
-  
+
+  Serial.println(xSpeed);
+  Serial.println(ySpeed);
+
+
   //stopp
   if(xVal < analogMax && xVal > analogMin && yVal < analogMax && yVal > analogMin){
-  analogWrite(motorAspeed, 0);
-  analogWrite(motorBspeed, 0);
+      Serial.println("stopping");
+
+  digitalWrite(motorAspeed, LOW);
+  digitalWrite(motorBspeed, LOW);
   digitalWrite(pinRB,HIGH);
   digitalWrite(pinRF,HIGH);
   digitalWrite(pinLB,HIGH);
-  digitalWrite(pinLF,HIGH);  }
+  digitalWrite(pinLF,HIGH);
+  //goto analizbreak;
+  }
   
-  if(xVal < analogMax && xVal > analogMin && yVal > analogMax){
+  if(xVal < analogMax && xVal > analogMin && yVal < analogMin){
     //go forward
-    analogWrite(motorAspeed, ySpeed);
-    analogWrite(motorBspeed, ySpeed);
+      Serial.println("forward");
+    analogWrite(motorAspeed, ySpeedNeg);
+    analogWrite(motorBspeed, ySpeedNeg);
     digitalWrite(pinRB,LOW);
     digitalWrite(pinRF,HIGH);
     digitalWrite(pinLB,LOW);
     digitalWrite(pinLF,HIGH);
   }
-  if(xVal > analogMin && yVal > analogMin){
+  if(xVal > analogMax && yVal < analogMin){
     //go forward and right
+      Serial.println("forward and right");
     analogWrite(motorAspeed, ySpeed);
     analogWrite(motorBspeed, xSpeedInv);
     digitalWrite(pinRB,LOW);
@@ -152,8 +162,9 @@ void analogAnalyzer(){
     digitalWrite(pinLB,LOW);
     digitalWrite(pinLF,HIGH);
   }
-  if(xVal < analogMin && yVal > analogMin){
+  if(xVal < analogMin && yVal < analogMin){
     //go forward and left
+      Serial.println("forward and left");
     analogWrite(motorAspeed, xSpeedInv);
     analogWrite(motorBspeed, ySpeed);
     digitalWrite(pinRB,LOW);
@@ -161,7 +172,7 @@ void analogAnalyzer(){
     digitalWrite(pinLB,LOW);
     digitalWrite(pinLF,HIGH);
   }
-  if(xVal < analogMin && xVal > analogMin && yVal < analogMin){
+  if(xVal < analogMin && xVal > analogMin && yVal > analogMax){
     //go backwards
     analogWrite(motorAspeed, ySpeedNeg);
     analogWrite(motorBspeed, ySpeedNeg);
@@ -205,6 +216,6 @@ void analogAnalyzer(){
     digitalWrite(pinRF,LOW);
     digitalWrite(pinLB,LOW);
     digitalWrite(pinLF,HIGH);
-  }
 
+  }
 }

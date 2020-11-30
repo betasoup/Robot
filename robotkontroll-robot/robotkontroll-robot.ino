@@ -39,7 +39,7 @@ const int pinLF=A1; // analog pin 1 as left forward connect with IN2
 const int pinRB=A2; // analog pin 2 as right back connect with IN3
 const int pinRF=A3; // analog pin 3 as right back connect with IN4
 const int motorAspeed=6; // pwm speed pin for the right motor
-const int motorBspeed=3; // pwm speed pin for the left motor
+const int motorBspeed=5; // pwm speed pin for the left motor
 
 // Time
 const int detectionFreq=50; // Detection Frequency in milliseconds
@@ -60,7 +60,7 @@ const int delay_time = 250; // wait for servo to turn! // sorry, som many thngs 
 //-- Objects --//
 
 // Servo motor that turns the ultra sonic sensor
-Servo senseServo;
+Servo senseServo; //initiates pin 3 in setup()
 
 // Ultra sonic sensor setup
 NewPing sonar(2, 4, 400); // output pin, input pin, maximum distance in cm.
@@ -126,11 +126,12 @@ void setup() {
   pinMode(pinRF,OUTPUT);
 
   //Tell the servo object what pin to use(set up servo pin...)
-  senseServo.attach(5);
+  senseServo.attach(3);
 }
 
 //-- The main loop. --//
 void loop() {
+  radioCheck();
   //autonomusMode
   if(robotStateLocal == 0){
     if(isBacking){

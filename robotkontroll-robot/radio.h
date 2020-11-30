@@ -66,12 +66,12 @@ void radioCheck()
             yVal = radioData.analogStickY;
             if(robotStateLocal != radioData.robotState)
             robotStateLocal = radioData.robotState;
-            Serial.print(String(xVal));
-            Serial.print('\n');
-            Serial.print(String(yVal));
-            Serial.print('\n');
-            Serial.print(radioData.robotState);
-            Serial.print('\n');
+        //    Serial.print(String(xVal));
+        //    Serial.print('\n');
+        //    Serial.print(String(yVal));
+        //    Serial.print('\n');
+        //    Serial.print(radioData.robotState);
+        //    Serial.print('\n');
         }
         else if (radioData.PacketType == BeginGetData)
         {
