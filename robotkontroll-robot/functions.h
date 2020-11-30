@@ -29,8 +29,6 @@ void ask_pin_R() { // test right distance
 void setSpeed(int speed) {
   analogWrite(motorAspeed, speed);
   analogWrite(motorBspeed, speed);
-  leftSpeed = speed;
-  rightSpeed = speed; 
 }
 void advance() {
   roboDirection = 1;
@@ -108,7 +106,6 @@ void detection() { //test the distance of different direction
   else {
     if (frontDist != 0){
     advance();
-    
     }
   }
   senseServo.write(90);
@@ -122,8 +119,8 @@ void analogAnalyzer(){
   ySpeed = map(yVal,analogMax, 1024, 70, 255);
   xSpeedNeg = map(xVal,analogMin, 0, 70, 255);
   ySpeedNeg = map(yVal,analogMin, 0, 70, 255);
-  xSpeedInv = ySpeed - xSpeed - 70;
-  xSpeedInvNeg = ySpeed - xSpeedNeg - 70;
+  xSpeedInv = ySpeedNeg - xSpeed - 70;
+  xSpeedInvNeg = ySpeedNeg - xSpeedNeg - 70;
 
   Serial.println(xSpeed);
   Serial.println(ySpeed);
@@ -144,6 +141,7 @@ void analogAnalyzer(){
   
   if(xVal < analogMax && xVal > analogMin && yVal < analogMin){
     //go forward
+
       Serial.println("forward");
     analogWrite(motorAspeed, ySpeedNeg);
     analogWrite(motorBspeed, ySpeedNeg);
@@ -155,7 +153,7 @@ void analogAnalyzer(){
   if(xVal > analogMax && yVal < analogMin){
     //go forward and right
       Serial.println("forward and right");
-    analogWrite(motorAspeed, ySpeed);
+    analogWrite(motorAspeed, ySpeedNeg);
     analogWrite(motorBspeed, xSpeedInv);
     digitalWrite(pinRB,LOW);
     digitalWrite(pinRF,HIGH);
@@ -165,8 +163,8 @@ void analogAnalyzer(){
   if(xVal < analogMin && yVal < analogMin){
     //go forward and left
       Serial.println("forward and left");
-    analogWrite(motorAspeed, xSpeedInv);
-    analogWrite(motorBspeed, ySpeed);
+    analogWrite(motorAspeed, xSpeedInvNeg);
+    analogWrite(motorBspeed, ySpeedNeg);
     digitalWrite(pinRB,LOW);
     digitalWrite(pinRF,HIGH);
     digitalWrite(pinLB,LOW);
@@ -174,8 +172,10 @@ void analogAnalyzer(){
   }
   if(xVal < analogMin && xVal > analogMin && yVal > analogMax){
     //go backwards
-    analogWrite(motorAspeed, ySpeedNeg);
-    analogWrite(motorBspeed, ySpeedNeg);
+    Serial.println("backing");
+
+    analogWrite(motorAspeed, ySpeed);
+    analogWrite(motorBspeed, ySpeed);
     digitalWrite(pinRB,HIGH);
     digitalWrite(pinRF,LOW);
     digitalWrite(pinLB,HIGH);
@@ -183,7 +183,8 @@ void analogAnalyzer(){
   }
   if(xVal > analogMin && yVal < analogMin){
     //go backwards and right
-    analogWrite(motorAspeed, ySpeedNeg);
+    Serial.println("back and right");
+    analogWrite(motorAspeed, ySpeed);
     analogWrite(motorBspeed, xSpeedInv);
     digitalWrite(pinRB,HIGH);
     digitalWrite(pinRF,LOW);
@@ -192,8 +193,9 @@ void analogAnalyzer(){
   }
   if(xVal < analogMin && yVal < analogMin){
     //go backwards and left
+    Serial.println("back and left");
     analogWrite(motorAspeed, xSpeedInvNeg);
-    analogWrite(motorBspeed, ySpeedNeg);
+    analogWrite(motorBspeed, ySpeed);
     digitalWrite(pinRB,HIGH);
     digitalWrite(pinRF,LOW);
     digitalWrite(pinLB,HIGH);
@@ -201,6 +203,7 @@ void analogAnalyzer(){
   }
   if(yVal < analogMin && yVal > analogMin && xVal > analogMin){
     //turn right
+    Serial.println("turn right");
     analogWrite(motorAspeed, xSpeed);
     analogWrite(motorBspeed, xSpeed);
     digitalWrite(pinRB,LOW);
@@ -210,12 +213,12 @@ void analogAnalyzer(){
   }
   if(yVal < analogMin && yVal > analogMin && xVal < analogMin){
     //turn left
+    Serial.println("turn left");
     analogWrite(motorAspeed, xSpeedNeg);
     analogWrite(motorBspeed, xSpeedNeg);
     digitalWrite(pinRB,HIGH);
     digitalWrite(pinRF,LOW);
     digitalWrite(pinLB,LOW);
     digitalWrite(pinLF,HIGH);
-
   }
 }
