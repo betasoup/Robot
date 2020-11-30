@@ -115,12 +115,12 @@ void detection() { //test the distance of different direction
 
 //---*--- Main Manual-Mode logic-loop function  ---*---//
 void analogAnalyzer(){
-  xSpeed = map(xVal,analogMax, 1024, 70, 255);
-  ySpeed = map(yVal,analogMax, 1024, 70, 255);
-  xSpeedNeg = map(xVal,analogMin, 0, 70, 255);
-  ySpeedNeg = map(yVal,analogMin, 0, 70, 255);
-  xSpeedInv = ySpeedNeg - xSpeed - 70;
-  xSpeedInvNeg = ySpeedNeg - xSpeedNeg - 70;
+  xSpeed = constrain(map(xVal,analogMax, 1024, 70, 255), 70, 255);
+  ySpeed = constrain(map(yVal,analogMax, 1024, 70, 255), 70, 255);
+  xSpeedNeg = constrain(map(xVal,analogMin, 0, 70, 255), 70, 255);
+  ySpeedNeg = constrain(map(yVal,analogMin, 0, 70, 255), 70, 255);
+  xSpeedInv = ySpeedNeg - xSpeed - 25;
+  xSpeedInvNeg = ySpeedNeg - xSpeedNeg - 25;
 
   Serial.println(xSpeed);
   Serial.println(ySpeed);
@@ -170,7 +170,7 @@ void analogAnalyzer(){
     digitalWrite(pinLB,LOW);
     digitalWrite(pinLF,HIGH);
   }
-  if(xVal < analogMin && xVal > analogMin && yVal > analogMax){
+  if(xVal < analogMax && xVal > analogMin && yVal > analogMax){
     //go backwards
     Serial.println("backing");
 
@@ -181,7 +181,7 @@ void analogAnalyzer(){
     digitalWrite(pinLB,HIGH);
     digitalWrite(pinLF,LOW);
   }
-  if(xVal > analogMin && yVal > analogMax){
+  if(xVal > analogMax && yVal > analogMax){
     //go backwards and right
     Serial.println("back and right");
     analogWrite(motorAspeed, ySpeed);
