@@ -153,8 +153,8 @@ void analogAnalyzer(){
   if(xVal > analogMax && yVal < analogMin){
     //go forward and right
       Serial.println("forward and right");
-    analogWrite(motorAspeed, ySpeedNeg);
-    analogWrite(motorBspeed, xSpeedInv);
+    analogWrite(motorAspeed, xSpeedInv);
+    analogWrite(motorBspeed, ySpeedNeg);
     digitalWrite(pinRB,LOW);
     digitalWrite(pinRF,HIGH);
     digitalWrite(pinLB,LOW);
@@ -163,8 +163,8 @@ void analogAnalyzer(){
   if(xVal < analogMin && yVal < analogMin){
     //go forward and left
       Serial.println("forward and left");
-    analogWrite(motorAspeed, xSpeedInvNeg);
-    analogWrite(motorBspeed, ySpeedNeg);
+    analogWrite(motorAspeed, ySpeedNeg);
+    analogWrite(motorBspeed, xSpeedInvNeg);
     digitalWrite(pinRB,LOW);
     digitalWrite(pinRF,HIGH);
     digitalWrite(pinLB,LOW);
@@ -181,7 +181,7 @@ void analogAnalyzer(){
     digitalWrite(pinLB,HIGH);
     digitalWrite(pinLF,LOW);
   }
-  if(xVal > analogMin && yVal < analogMin){
+  if(xVal > analogMin && yVal > analogMax){
     //go backwards and right
     Serial.println("back and right");
     analogWrite(motorAspeed, ySpeed);
@@ -191,7 +191,7 @@ void analogAnalyzer(){
     digitalWrite(pinLB,HIGH);
     digitalWrite(pinLF,LOW);
   }
-  if(xVal < analogMin && yVal < analogMin){
+  if(xVal < analogMin && yVal > analogMax){
     //go backwards and left
     Serial.println("back and left");
     analogWrite(motorAspeed, xSpeedInvNeg);
@@ -201,7 +201,7 @@ void analogAnalyzer(){
     digitalWrite(pinLB,HIGH);
     digitalWrite(pinLF,LOW);
   }
-  if(yVal < analogMin && yVal > analogMin && xVal > analogMin){
+  if(yVal < analogMax && yVal > analogMin && xVal > analogMax){
     //turn right
     Serial.println("turn right");
     analogWrite(motorAspeed, xSpeed);
@@ -211,7 +211,7 @@ void analogAnalyzer(){
     digitalWrite(pinLB,HIGH);
     digitalWrite(pinLF,LOW);
   }
-  if(yVal < analogMin && yVal > analogMin && xVal < analogMin){
+  if(yVal < analogMax && yVal > analogMin && xVal < analogMin){
     //turn left
     Serial.println("turn left");
     analogWrite(motorAspeed, xSpeedNeg);
